@@ -10,6 +10,10 @@ win.bgcolor("black")  # change the background color
 win.setup(width=800, height=600)
 win.tracer(0)
 
+# Score
+score_a = 0
+score_b = 0
+
 # Paddle A
 paddle_a = turtle.Turtle()
 paddle_a.speed(0)  # speed of animation, set to max
@@ -37,6 +41,15 @@ ball.penup()  # Turtle objects draw a line as they're moving, this disables that
 ball.goto(0, 0)
 ball.dx = 2
 ball.dy = 2
+
+# Pen
+pen = turtle.Turtle()
+pen.speed(0)
+pen.color("white")
+pen.penup() # every turtle starts at center of screen, dont want line through screen
+pen.hideturtle()
+pen.goto(0, 260)
+pen.write("Player A: 0  Player B: 0", align="center", font=("Courier", 24, "normal"))
 
 # Functions
 def paddle_a_up():
@@ -70,6 +83,8 @@ win.onkeypress(paddle_b_down, "Down")
 while True:
     win.update()
 
+
+
     # Move the ball
     ball.setx(ball.xcor() + ball.dx)
     ball.sety(ball.ycor() + ball.dy)
@@ -86,10 +101,16 @@ while True:
     if ball.xcor() > 380:
         ball.goto(0,0)
         ball.dx *= -1
+        score_a += 1
+        pen.clear()
+        pen.write("Player A: {}  Player B: {}".format(score_a, score_b), align="center", font=("Courier", 24, "normal"))
 
     if ball.xcor() < -390:
         ball.goto(0,0)
         ball.dx *= -1
+        score_b += 1
+        pen.clear()
+        pen.write("Player A: {}  Player B: {}".format(score_a, score_b), align="center", font=("Courier", 24, "normal"))
 
     # paddle and ball collisions
     if (340 < ball.xcor() < 350) and (paddle_b.ycor() + 40 > ball.ycor() > paddle_b.ycor() - 40):
