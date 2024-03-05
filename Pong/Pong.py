@@ -29,6 +29,13 @@ paddle_b.penup()  # Turtle objects draw a line as they're moving, this disables 
 paddle_b.goto(350, 0)
 
 # Ball
+ball = turtle.Turtle()
+ball.speed(0)  # speed of animation, set to max
+ball.shape("square") # default 20 x 20 pizels
+ball.color("white")
+ball.penup()  # Turtle objects draw a line as they're moving, this disables that
+ball.goto(0, 0)
+
 
 # Main game loop
 while True:
