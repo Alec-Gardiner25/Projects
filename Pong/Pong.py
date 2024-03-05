@@ -3,6 +3,7 @@
 
 
 import turtle
+import os
 
 win = turtle.Screen()  # initializes a window
 win.title("Pong by Alec")  # Create a title for the window
@@ -83,8 +84,6 @@ win.onkeypress(paddle_b_down, "Down")
 while True:
     win.update()
 
-
-
     # Move the ball
     ball.setx(ball.xcor() + ball.dx)
     ball.sety(ball.ycor() + ball.dy)
@@ -93,10 +92,12 @@ while True:
     if ball.ycor() > 290:
         ball.sety(290)
         ball.dy *= -1
+        os.system("afplay Pong_Sound.mp3&")
 
     if ball.ycor() < -280:
         ball.sety(-280)
         ball.dy *= -1
+        os.system("afplay Pong_Sound.mp3&")
 
     if ball.xcor() > 380:
         ball.goto(0,0)
@@ -116,7 +117,9 @@ while True:
     if (340 < ball.xcor() < 350) and (paddle_b.ycor() + 40 > ball.ycor() > paddle_b.ycor() - 40):
         ball.setx(340)
         ball.dx *= -1
+        os.system("afplay Pong_Sound.mp3&")
 
     if (-340 > ball.xcor() > -350) and (paddle_a.ycor() + 40 > ball.ycor() > paddle_a.ycor() - 40):
         ball.setx(-340)
         ball.dx *= -1
+        os.system("afplay Pong_Sound.mp3&")
