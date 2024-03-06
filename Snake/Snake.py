@@ -8,24 +8,52 @@ from tkinter import messagebox
 class Cube(object):
     rows = 0
     w = 0
-    def __int__(self,start, dirnx=1, dirny=0,color=(255,0,0)):
-        pass
+    def __init__(self,start, dirnx=1, dirny=0,color=(0,255,0)):
+
+        self.pos = start
+        self.dirnx = 1
+        self.dirny = 0
+        self.color = color
+
+
     def move(self, dirnx, dirny):
-        pass
+        '''
+        self.dirnx = dirnx
+        self.dirny = dirny
+        self.pos(self.pos[0]+ self.dirnx, self.pos[1] + self.dirny)
+        '''
+
     def draw(self, surface, eyes=False):
-        pass
+        '''
+        dis = self.w // self.rows
+        i = self.pos[0]
+        j = self.pos[1]
+
+        pygame.draw.rect(surface, self.color, (i*dis+1, j*dis+1, dis-2, dis-2))
+
+        if eyes:
+            centre = dis//2
+            radius = 3
+            circleMiddle = (i*dis+centre-radius, j*dis+8)
+            circleMiddle2 = (i*dis + dis - radius*2, j*dis+8)
+            pygame.draw.circle(surface,(0,0,0), circleMiddle, radius)
+            pygame.draw.circle(surface,(0,0,0), circleMiddle2, radius)
+
+        '''
+
 class Snake(object):
     body = []
     turns = {}
     def __init__(self, color, pos):
         self.color = color
-        self.head = cube(pos)
+        self.head = Cube(pos)
         self.body.append(self.head)
         self.dirnx = 0  # x direction
         self.dirny = 1  # y direction
 
-        pass
+
     def move(self):
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -82,9 +110,17 @@ class Snake(object):
     def addCube(self):
         pass
     def draw(self, surface):
-        pass
+        '''
+        for i, c in enumerate(self.body):
+            if i == 0:
+                c.draw(surface, True)
+            else:
+                c.draw(surface)
+        '''
+
 
 def drawGrid(w, rows, surface):
+
     sizeBtwn = w//rows
 
     x = 0
@@ -98,14 +134,6 @@ def drawGrid(w, rows, surface):
         pygame.draw.line(surface, (255,255,255), (x,0), (x,w))  # Draws vertical line, moves horizontally
         pygame.draw.line(surface, (255,255,255), (0,y), (w,y))  # Draws horizontal line, moves vertically
 
-    pass
-
-def redrawWindow(surface):
-    global rows, width
-    surface.fill((0,0,0))
-    drawGrid(width, rows, surface)
-    pygame.display.update()
-
 
 def randomSnack(rows, items):
     pass
@@ -113,17 +141,37 @@ def randomSnack(rows, items):
 def messageBox(subject, content):
     pass
 
+def draw(window,size,rows):
+    pygame.display.set_caption('Snake by Alec')
+
+    window.fill((0,0,0))
+
+    drawGrid(size, rows, window)
+
+    pygame.display.flip()
+
 def main():
-    global width, rows
-    width = 500
+    size = 500
     rows = 20
-    win = pygame.display.set_mode((width,width))
-    snake = Snake((0,255,0),(10,10))
+    win = pygame.display.set_mode((size,size))
+    s = Snake((0,255,0), (10,10))
     clock = pygame.time.Clock()
-
-    while True:
-
+    # game loop
+    flag = True
+    while flag:
         pygame.time.delay(50)
-        clock.tick(10)  # game runs at max 10 frames per second
-        redrawWindow(win)
-    pass
+        clock.tick(10)
+
+        draw(win, size, rows)
+
+        # for loop through the event queue
+        for event in pygame.event.get():
+
+            # Check for QUIT event
+            if event.type == pygame.QUIT:
+                flag = False
+
+
+
+if __name__ == "__main__":
+    main()
