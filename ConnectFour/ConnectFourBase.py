@@ -66,7 +66,9 @@ while not game_over:
             game_over = winning_move(board,1)
             if game_over:
                 winner = "Player 1"
-
+        else:
+            print("Invalid location, Try again")
+            turn -= 1
     # Ask for p2 input
     else:
         col = int(input("Player 2, make your Selection (0-6): "))
@@ -78,6 +80,9 @@ while not game_over:
             game_over = winning_move(board,2)
             if game_over:
                 winner = "Player 2"
+        else:
+            print("Invalid location, Try again")
+            turn -= 1
     turn += 1
     turn %= 2
 print("Game over, winner is: " , winner, "!")
