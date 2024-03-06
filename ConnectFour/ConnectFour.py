@@ -94,11 +94,23 @@ window = pygame.display.set_mode(size)
 draw_board(board)
 pygame.display.update()
 
+font = pygame.font.SysFont("monospace", 75)
+
 while not game_over:
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
+
+        if event.type == pygame.MOUSEMOTION:
+            pygame.draw.rect(window, BLACK, (0,0, width, SQUARESIZE))
+            posx = event.pos[0]
+            if turn % 2 == 0:
+                pygame.draw.circle(window, RED, (posx, int(SQUARESIZE / 2)), RADIUS)
+            else:
+                pygame.draw.circle(window, YELLOW, (posx, int(SQUARESIZE / 2)), RADIUS)
+
+            pygame.display.update()
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             #print(event.pos)
@@ -112,7 +124,9 @@ while not game_over:
                     drop_piece(board, row, col, 1)
                     game_over = winning_move(board,1)
                     if game_over:
-                        winner = "Player 1"
+                        pygame.draw.rect(window, BLACK, (0, 0, width, SQUARESIZE))
+                        label = font.render("Player 1 wins!", 1, RED)
+                        window.blit(label,(40,10))
                 else:
                     print("Invalid location, Try again")
                     turn -= 1
@@ -126,13 +140,15 @@ while not game_over:
                     drop_piece(board, row, col, 2)
                     game_over = winning_move(board,2)
                     if game_over:
-                        winner = "Player 2"
+                        pygame.draw.rect(window, BLACK, (0, 0, width, SQUARESIZE))
+                        label = font.render("Player 2 wins!", 1, YELLOW)
+                        window.blit(label,(40,10))
+
                 else:
                     print("Invalid location, Try again")
                     turn -= 1
             draw_board(board)
             turn += 1
             turn %= 2
-
-
-print("Game over, winner is: " , winner, "!")
+            if game_over:
+                pygame.time.wait(2000)
