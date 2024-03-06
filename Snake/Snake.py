@@ -6,10 +6,9 @@ import tkinter as tk
 from tkinter import messagebox
 
 class Cube(object):
-    rows = 0
-    w = 0
+    rows = 20
+    w = 500
     def __init__(self,start, dirnx=1, dirny=0,color=(0,255,0)):
-
         self.pos = start
         self.dirnx = 1
         self.dirny = 0
@@ -17,14 +16,14 @@ class Cube(object):
 
 
     def move(self, dirnx, dirny):
-        '''
+
         self.dirnx = dirnx
         self.dirny = dirny
-        self.pos(self.pos[0]+ self.dirnx, self.pos[1] + self.dirny)
-        '''
+        self.pos(self.pos[0] + self.dirnx, self.pos[1] + self.dirny)
+
 
     def draw(self, surface, eyes=False):
-        '''
+
         dis = self.w // self.rows
         i = self.pos[0]
         j = self.pos[1]
@@ -39,7 +38,7 @@ class Cube(object):
             pygame.draw.circle(surface,(0,0,0), circleMiddle, radius)
             pygame.draw.circle(surface,(0,0,0), circleMiddle2, radius)
 
-        '''
+
 
 class Snake(object):
     body = []
@@ -102,7 +101,7 @@ class Snake(object):
                     c.pos = (c.pos[0], c.rows-1)
 
                 else:
-                    c.move(c.dirnx, c.dirny)
+                    c.move(c.dirnx, c.dirny)  # if you haven't hit anything, just keep going
 
 
     def reset(self, pos):
@@ -110,13 +109,13 @@ class Snake(object):
     def addCube(self):
         pass
     def draw(self, surface):
-        '''
+
         for i, c in enumerate(self.body):
             if i == 0:
                 c.draw(surface, True)
             else:
                 c.draw(surface)
-        '''
+
 
 
 def drawGrid(w, rows, surface):
@@ -141,10 +140,12 @@ def randomSnack(rows, items):
 def messageBox(subject, content):
     pass
 
-def draw(window,size,rows):
+def drawSurface(window: object, size, rows, snake):
     pygame.display.set_caption('Snake by Alec')
 
     window.fill((0,0,0))
+
+    snake.draw(window)
 
     drawGrid(size, rows, window)
 
@@ -154,7 +155,7 @@ def main():
     size = 500
     rows = 20
     win = pygame.display.set_mode((size,size))
-    s = Snake((0,255,0), (10,10))
+    snake = Snake((0,255,0), (10,10))
     clock = pygame.time.Clock()
     # game loop
     flag = True
@@ -162,7 +163,7 @@ def main():
         pygame.time.delay(50)
         clock.tick(10)
 
-        draw(win, size, rows)
+        drawSurface(win, size, rows, snake)
 
         # for loop through the event queue
         for event in pygame.event.get():
