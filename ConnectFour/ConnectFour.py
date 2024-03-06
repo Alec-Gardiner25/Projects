@@ -28,6 +28,10 @@ def get_next_open_row(board, col):
         if board[r][col] == 0:
             return r
 
+def reset_board():
+    create_board()
+
+
 def winning_move(board, piece):
     # Check all horizontal locations for win
     for c in range(COLUMN_COUNT-3):
@@ -73,6 +77,38 @@ def draw_board(board):
                                    RADIUS)
     pygame.display.update()
 
+def messageBox(subject, content):
+    font = pygame.font.Font(None, 36)
+    text = font.render(subject, True, (0, 0, 0))
+
+    box_width = 300
+    box_height = 100
+    box_rect = pygame.Rect((SQUARESIZE*COLUMN_COUNT - box_width) // 2, (SQUARESIZE*ROW_COUNT - box_height) // 2, box_width, box_height)
+
+    pygame.draw.rect(window, (255, 255, 255), box_rect)  # Draw a black rectangle
+    window.blit(text,
+             (box_rect.x + (box_width - text.get_width()) // 2, box_rect.y + (box_height - text.get_height()) // 2))
+    pygame.display.flip()
+
+    button_rect = pygame.Rect((SQUARESIZE*COLUMN_COUNT - 150) // 2, box_rect.bottom -20, 150, 40)
+    pygame.draw.rect(window, (0, 255, 255), button_rect)  # Draw a blue button
+    button_text = font.render(content, True, (0, 0, 0))
+    window.blit(button_text, (button_rect.x + (button_rect.width - button_text.get_width()) // 2,
+                           button_rect.y + (button_rect.height - button_text.get_height()) // 2))
+    pygame.display.update()
+
+    waiting_for_key = True
+    while waiting_for_key:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                waiting_for_key = False
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                mouse_pos = pygame.mouse.get_pos()
+                if button_rect.collidepoint(mouse_pos):
+                    waiting_for_key = False
+
+    pygame.display.update()
 
 board = create_board()
 
@@ -150,5 +186,9 @@ while not game_over:
             draw_board(board)
             turn += 1
             turn %= 2
-            if game_over:
-                pygame.time.wait(2000)
+    if game_over:
+        messageBox("Game over.", "Play Again?")
+        board = create_board()
+        draw_board(board)
+        pygame.display.update()
+        game_over = False
