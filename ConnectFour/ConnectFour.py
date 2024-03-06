@@ -5,6 +5,8 @@ import math
 
 BLUE = (0,0,255)
 BLACK = (0,0,0)
+RED = (255,0,0)
+YELLOW = (255,255,0)
 ROW_COUNT = 6
 COLUMN_COUNT = 7
 SQUARESIZE = 100
@@ -55,8 +57,21 @@ def draw_board(board):
     for c in range(COLUMN_COUNT):
         for r in range(ROW_COUNT):
             pygame.draw.rect(window, BLUE, (c*SQUARESIZE,r*SQUARESIZE+SQUARESIZE, SQUARESIZE,SQUARESIZE))
-            pygame.draw.circle(window, BLACK, (c*SQUARESIZE+int(SQUARESIZE/2), r*SQUARESIZE + int(3 * SQUARESIZE / 2)), RADIUS)
-    pass
+            if board[r][c] == 0:
+                pygame.draw.circle(window, BLACK,
+                                   (c * SQUARESIZE + int(SQUARESIZE / 2), r * SQUARESIZE + int(3 * SQUARESIZE / 2)),
+                                   RADIUS)
+    for c in range(COLUMN_COUNT):
+        for r in range(ROW_COUNT):
+            if board[r][c] == 1:
+                pygame.draw.circle(window, RED,
+                                   (c * SQUARESIZE + int(SQUARESIZE / 2), r * SQUARESIZE + int(3 * SQUARESIZE / 2)),
+                                   RADIUS)
+            elif board[r][c] == 2:
+                pygame.draw.circle(window, YELLOW,
+                                   (c * SQUARESIZE + int(SQUARESIZE / 2), r * SQUARESIZE + int(3 * SQUARESIZE / 2)),
+                                   RADIUS)
+    pygame.display.update()
 
 
 board = create_board()
@@ -95,7 +110,6 @@ while not game_over:
                 if is_valid_location(board, col):
                     row = get_next_open_row(board, col)
                     drop_piece(board, row, col, 1)
-                    print(board)
                     game_over = winning_move(board,1)
                     if game_over:
                         winner = "Player 1"
@@ -110,13 +124,13 @@ while not game_over:
                 if is_valid_location(board, col):
                     row = get_next_open_row(board, col)
                     drop_piece(board, row, col, 2)
-                    print(board)
                     game_over = winning_move(board,2)
                     if game_over:
                         winner = "Player 2"
                 else:
                     print("Invalid location, Try again")
                     turn -= 1
+            draw_board(board)
             turn += 1
             turn %= 2
 
