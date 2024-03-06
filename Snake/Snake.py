@@ -1,14 +1,11 @@
 import math
 import random
 import pygame
-#import tkinter as tk
-#from tkinter import messagebox
 
 
 class Cube(object):
     rows = 20
     w = 500
-
     def __init__(self, start, dirnx=1, dirny=0, color=(0, 255, 0)):
         self.pos = start
         self.dirnx = dirnx
@@ -24,7 +21,6 @@ class Cube(object):
         dis = self.w // self.rows
         i = self.pos[0]
         j = self.pos[1]
-
         pygame.draw.rect(surface, self.color, (i * dis + 1, j * dis + 1, dis - 2, dis - 2))
 
         if eyes:
@@ -34,7 +30,6 @@ class Cube(object):
             circleMiddle2 = (i * dis + dis - radius * 2, j * dis + 8)
             pygame.draw.circle(surface, (0, 0, 0), circleMiddle, radius)
             pygame.draw.circle(surface, (0, 0, 0), circleMiddle2, radius)
-
 
 class Snake(object):
     body = []
@@ -48,7 +43,6 @@ class Snake(object):
         self.dirny = 1  # y direction
 
     def move(self):
-
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -124,7 +118,6 @@ class Snake(object):
         self.body[-1].dirny = dy
 
     def draw(self, surface):
-
         for i, c in enumerate(self.body):
             if i == 0:
                 c.draw(surface, True)
@@ -134,7 +127,6 @@ class Snake(object):
 
 def drawGrid(w, rows, surface):
     sizeBtwn = w // rows
-
     x = 0
     y = 0
 
@@ -145,7 +137,6 @@ def drawGrid(w, rows, surface):
         # Draw two lines for every loop
         pygame.draw.line(surface, (255, 255, 255), (x, 0), (x, w))  # Draws vertical line, moves horizontally
         pygame.draw.line(surface, (255, 255, 255), (0, y), (w, y))  # Draws horizontal line, moves vertically
-
 
 def randomSnack(rows, item):
     positions = item.body
@@ -173,7 +164,6 @@ def messageBox(subject, content, score):
     pygame.draw.rect(win, (255,255,255), box_rect)  # Draw a black rectangle
     win.blit(text,
              (box_rect.x + (box_width - text.get_width()) // 2, box_rect.y + (box_height - text.get_height()) // 2))
-
     pygame.display.flip()
 
     button_rect = pygame.Rect((size - 150) // 2, box_rect.bottom + 10, 150, 40)
@@ -181,7 +171,6 @@ def messageBox(subject, content, score):
     button_text = font.render(content, True, (0,0,0))
     win.blit(button_text, (button_rect.x + (button_rect.width - button_text.get_width()) // 2,
                            button_rect.y + (button_rect.height - button_text.get_height()) // 2))
-
     pygame.display.update()
 
     waiting_for_key = True
