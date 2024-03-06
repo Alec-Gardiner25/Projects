@@ -1,6 +1,7 @@
 import sys
 import numpy as np
 import pygame
+import math
 
 BLUE = (0,0,255)
 BLACK = (0,0,0)
@@ -85,9 +86,11 @@ while not game_over:
             sys.exit()
 
         if event.type == pygame.MOUSEBUTTONDOWN:
+            #print(event.pos)
             # Ask for p1 input
             if turn == 0:
-                col = int(input("Player 1, make your Selection (0-6): "))
+                posx = event.pos[0]
+                col = posx//SQUARESIZE
 
                 if is_valid_location(board, col):
                     row = get_next_open_row(board, col)
@@ -101,7 +104,8 @@ while not game_over:
                     turn -= 1
             # Ask for p2 input
             else:
-                col = int(input("Player 2, make your Selection (0-6): "))
+                posx = event.pos[0]
+                col = posx//SQUARESIZE
 
                 if is_valid_location(board, col):
                     row = get_next_open_row(board, col)
@@ -115,4 +119,6 @@ while not game_over:
                     turn -= 1
             turn += 1
             turn %= 2
+
+
 print("Game over, winner is: " , winner, "!")
