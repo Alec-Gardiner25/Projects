@@ -19,7 +19,7 @@ class Cube(object):
 
         self.dirnx = dirnx
         self.dirny = dirny
-        self.pos(self.pos[0] + self.dirnx, self.pos[1] + self.dirny)
+        self.pos = (self.pos[0] + self.dirnx, self.pos[1] + self.dirny)
 
 
     def draw(self, surface, eyes=False):
@@ -163,7 +163,10 @@ def main():
         pygame.time.delay(50)
         clock.tick(10)
 
+        snake.move()
+
         drawSurface(win, size, rows, snake)
+
 
         # for loop through the event queue
         for event in pygame.event.get():
