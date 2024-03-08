@@ -235,7 +235,7 @@ def draw_next_shape(shape, surface):
             if column == '0':
                 pygame.draw.rect(surface, shape.color, (sx + j * block_size, sy + i * block_size, block_size, block_size))
 
-    pass
+    surface.blit(label, (sx+10, sy - 30))
 
 def draw_window(surface,grid):
     surface.fill((0,0,0))
@@ -249,6 +249,7 @@ def draw_window(surface,grid):
             pygame.draw.rect(surface, grid[i][j], (top_left_x + j*block_size, top_left_y + i*block_size, block_size,block_size))
 
     pygame.draw.rect(surface, (255,0,0), (top_left_x, top_left_y, play_width, play_height), 4)
+
 
     draw_grid(surface,grid)
     pygame.draw.rect(surface, (255,0,0), (top_left_x, top_left_y, play_width,play_height), 5)
@@ -318,6 +319,7 @@ def main(win):
             change_piece = False
 
         draw_window(win,grid)
+        draw_next_shape(next_piece,win)
         pygame.display.update()
 
         if check_lost(locked_positions):
