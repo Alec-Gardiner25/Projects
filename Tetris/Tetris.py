@@ -1,5 +1,6 @@
 import pygame
 import random
+import sys
 
 """
 10 x 20 square grid
@@ -221,22 +222,30 @@ def draw_grid(surface,grid):
 def clear_rows(grid, locked):
     inc = 0
     ind = 0
-    for i in range(len(grid)-1,-1,-1):
+    for i in range(len(grid)-1, -1, -1):
         row = grid[i]
-        if (0,0,0) not in row:
+        if (0, 0, 0) not in row:
             inc += 1
             ind = i
             for j in range(len(row)):
                 try:
-                    del locked[(j,i)]
-                except:
+                    del locked[(j, i)]
+                except KeyError:
                     continue
-    if inc > 0:
-        for key in sorted(list(locked), key=lambda x:x[1])[::-1]:
-            x, y = key
-            if y < ind:
-                newKey = (x, y + inc)
-                locked[newKey] = locked.pop(key)
+
+        if inc > 0:
+            for key in sorted(list(locked), key=lambda x: x[1], reverse=True):
+                x, y = key
+                if y < ind:
+                    new_key = (x, y + inc)
+                    locked[new_key] = locked.pop(key)
+
+def check_bottom_row(grid, locked):
+    for val in grid[-1]:
+        if val != (0,0,0):
+            return True
+    return False
+
 
 
 def draw_next_shape(shape, surface):
@@ -277,7 +286,6 @@ def draw_window(surface,grid):
 def main(win):
     locked_positions = {}
     grid = create_grid(locked_positions)
-
     change_piece = False
     run = True
     current_piece = get_shape()
@@ -336,6 +344,7 @@ def main(win):
             next_piece = get_shape()
             change_piece = False
             clear_rows(grid, locked_positions)
+
 
         draw_window(win,grid)
         draw_next_shape(next_piece,win)
