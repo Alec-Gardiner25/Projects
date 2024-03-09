@@ -123,9 +123,28 @@ class Pipe:
             return True
         return False
 
+class Base:
+    VELOCITY = 5
+    WIDTH = BASE_IMG.get_width()
+    IMG = BASE_IMG
 
+    def __init__(self, y):
+        self.y = y
+        self.x1 = 0
+        self.x2 = self.WIDTH
 
+    def move(self):
+        self.x1 -= self.VELOCITY
+        self.x2 -= self.VELOCITY
 
+        if self.x1 + self.WIDTH < 0:
+            self.x1 = self.x2 + self.WIDTH
+        if self.x2 + self.WIDTH < 0:
+            self.x2 = self.x1 + self.WIDTH
+
+    def draw(self, win):
+        win.blit(self.IMG, (self.x1, y))
+        win.blit(self.IMG, (self.x2, y))
 
 def draw_window(win, bird):
     win.blit(BG_IMG, (0,0))
