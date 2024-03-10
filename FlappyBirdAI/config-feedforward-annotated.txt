@@ -1,7 +1,7 @@
 # This text file is not to be used
 # Its purpose is for annotations and elaborating on the original txt file without messing things up
 
-[NEAT]
+[NEAT]  # Required everytime, everything else is optional
 fitness_criterion     = max  # can choose min max mean, choose based on that level of fitness
 fitness_threshold     = 100  # what fitness level to reach before program terminates
 pop_size              = 100
