@@ -1,13 +1,18 @@
+# This text file is not to be used
+# Its purpose is for annotations and elaborating on the original txt file without messing things up
+
 [NEAT]
-fitness_criterion     = max
-fitness_threshold     = 100
+fitness_criterion     = max  # can choose min max mean, choose based on that level of fitness
+fitness_threshold     = 100  # what fitness level to reach before program terminates
 pop_size              = 100
 reset_on_extinction   = False
+ # populations w/ different amounts of nodes and layers are different species,
+# if True, when all species simultaneously become extinct due to stagnation, a new random population will be created
 
 [DefaultGenome]
 # node activation options
 activation_default      = tanh
-activation_mutate_rate  = 0.0
+activation_mutate_rate  = 0.0  # probability that the activation function will be replaced by a randomly selected function from activated options
 activation_options      = tanh
 
 # node aggregation options
@@ -21,7 +26,7 @@ bias_init_stdev         = 1.0
 bias_max_value          = 30.0
 bias_min_value          = -30.0
 bias_mutate_power       = 0.5
-bias_mutate_rate        = 0.7
+bias_mutate_rate        = 0.7  # how likely these are to change, for all three
 bias_replace_rate       = 0.1
 
 # genome compatibility options
@@ -33,7 +38,7 @@ conn_add_prob           = 0.5
 conn_delete_prob        = 0.5
 
 # connection enable options
-enabled_default         = True
+enabled_default         = True  # can have connections that can be enabled or not
 enabled_mutate_rate     = 0.01
 
 feed_forward            = True
